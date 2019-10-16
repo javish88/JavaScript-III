@@ -39,9 +39,53 @@
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
 
+// Build next constructor
+function GameObject(gameObjectAttributes){
+  this.createdAt = gameObjectAttributes.createdAt;
+  this.dimensions = gameObjectAttributes.dimensions;
+}
+
+// methods for this ^^^^^^ constructor
+GameObject.prototype.destroy = function() {
+  return `${this.name} was removed from the game`;
+}
+
+// Build Next Constructor 
+function CharacterStats(characterStatsAttribute){
+  this.healthPoints = characterStatsAttribute.healthPoints;
+  this.name = characterStatsAttribute.name;
+  GameObject.call(this, characterStatsAttribute);
+}
+
+// Inheritance
+CharacterStats.prototype = Object.create(GameObject.prototype);
+
+// methods for this ^^^^^^^^
+CharacterStats.prototype.takeDamage = function () {
+  return `${this.name} took damage`;
+}
+
+
+
+
+
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+function Humanoid(humanoidAttributes){
+  this.team = humanoidAttributes.team;
+  this.weapons = humanoidAttributes.weapons;
+  this.language = humanoidAttributes.language;
+  CharacterStats.call(this, humanoidAttributes); 
+}
+
+Humanoid.prototype = Object.create(CharacterStats.prototype);
+
+Humanoid.prototype.greet = function () {
+  return `${this.name} offers a greeting in ${this.language}`;
+}
+
+
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -102,7 +146,7 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
